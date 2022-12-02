@@ -30,5 +30,14 @@ public class EmpregadoController {
        return this.empregadoService.salvarEmpregado(empregadoDTO);
     }
 
+    @PutMapping("/empregados/{idEmpregado}")
+    public Empregado atualizarEmpregado(@PathVariable Integer idEmpregado, @Valid @RequestBody EmpregadoDTO dto) {
+        Empregado atualizado = this.empregadoService.atualizarEmpregado(idEmpregado, dto);
+        return atualizado;
+    }
 
+    @DeleteMapping("/empregados/{idEmpregado}") // Verbo DELETE no /cargos/1
+    public void deletarEmpregado(@PathVariable Integer idEmpregado) {
+        this.empregadoService.deletarEmpregado(idEmpregado);
+    }
 }

@@ -1,6 +1,7 @@
 package org.soulcodeacademy.empresa.services;
 
 import org.soulcodeacademy.empresa.domain.Empregado;
+import org.soulcodeacademy.empresa.domain.Endereco;
 import org.soulcodeacademy.empresa.domain.dto.EmpregadoDTO;
 import org.soulcodeacademy.empresa.reporsitories.EmpregadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class EmpregadoService {
 
     @Autowired
     EmpregadoRepository empregadoRepository;
+
+    @Autowired
+    EnderecoService enderecoService;
 
     public List<Empregado> listarEmpregados(){
         return this.empregadoRepository.findAll();
@@ -31,12 +35,29 @@ public class EmpregadoService {
 
     public Empregado salvarEmpregado(EmpregadoDTO empregadoDTO){
 
+        Endereco enderecoAtual = this.enderecoService.getEndereco(empregadoDTO.getIdEndereco());
+
         Empregado novoEmpregado = new Empregado(null, empregadoDTO.getNome(), empregadoDTO.getEmail(), empregadoDTO.getSalario());
+        novoEmpregado.setEndereco(enderecoAtual);
 
         Empregado empregadoSalvo = this.empregadoRepository.save(novoEmpregado);
 
         return empregadoSalvo;
     }
 
+    public Empregado atualizarEmpregado(Integer idEmpregado, EmpregadoDTO dto){
+        Empregado empregadoAtual = this.getEmpregado(idEmpregado);
 
+        empregadoAtual.setNome(dto.getNome());
+        empregadoAtual.setEmail(dto.getEmail());
+        empregadoAtual.setSalario(dto.getSalario());
+
+
+        return this.empregadoRepository.save(empregadoAtual);
+    }
+
+    public void deletarEmpregado(Integer idEmpregado) {
+        Empregado empregado = this.getEmpregado(idEmpregado);
+        this.empregadoRepository.delete(empregado);
+    }
 }

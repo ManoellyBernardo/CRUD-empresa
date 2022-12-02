@@ -16,9 +16,6 @@ public class DependenteService {
     @Autowired
     DependenteRepository dependenteRepository;
 
-    @Autowired
-    EmpregadoService empregadoService;
-
     public List<Dependente> listarDependentes(){
         return this.dependenteRepository.findAll();
     }
@@ -31,12 +28,5 @@ public class DependenteService {
         }else{
             return dependente.get();
         }
-    }
-
-    public Dependente dependente(DependenteDTO dependenteDTO){
-        Empregado responsavel = this.empregadoRepository.getEmpregado(empregadoDTO.getIdEmpregado);
-        Dependente novoDependente = new Dependente(null, dependenteDTO.getIdResponsavel(), dependenteDTO.getNome(), dependenteDTO.getIdade());
-
-        return Dependente dependente = this.dependenteRepository.save(novoDependente);
     }
 }
