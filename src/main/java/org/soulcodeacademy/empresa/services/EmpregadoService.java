@@ -45,13 +45,13 @@ public class EmpregadoService {
         return empregadoSalvo;
     }
 
-    public Empregado atualizarEmpregado(Integer idEmpregado, EmpregadoDTO dto){
+    public Empregado atualizarEmpregado(Integer idEmpregado, EmpregadoDTO empregadoDTO){
         Empregado empregadoAtual = this.getEmpregado(idEmpregado);
+        Endereco endereco = this.enderecoService.getEndereco(empregadoDTO.getIdEndereco());
 
-        empregadoAtual.setNome(dto.getNome());
-        empregadoAtual.setEmail(dto.getEmail());
-        empregadoAtual.setSalario(dto.getSalario());
-
+        empregadoAtual.setNome(empregadoDTO.getNome());
+        empregadoAtual.setEmail(empregadoDTO.getEmail());
+        empregadoAtual.setSalario(empregadoDTO.getSalario());
 
         return this.empregadoRepository.save(empregadoAtual);
     }

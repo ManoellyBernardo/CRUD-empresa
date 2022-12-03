@@ -16,9 +16,6 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    @Autowired
-    private EmpregadoService empregadoService;
-
     public List<Endereco> listarEndereco() {
         return this.enderecoRepository.findAll();
     }
@@ -34,10 +31,24 @@ public class EnderecoService {
 
     public Endereco salvarEndereco(EnderecoDTO enderecoDTO){
 
-        Empregado empregado = this.empregadoService.getEmpregado(enderecoDTO.getIdEmpregado());
-
         Endereco enderecoNovo = new Endereco(null, enderecoDTO.getCidade(), enderecoDTO.getUf());
 
         return this.enderecoRepository.save(enderecoNovo);
+    }
+
+    public Endereco atualizarEndereco(Integer idEndereco, EnderecoDTO enderecoDTO){
+
+        Endereco enderecoAtualizado = this.getEndereco(idEndereco);
+
+        enderecoAtualizado.setCidade(enderecoDTO.getCidade());
+        enderecoAtualizado.setUf(enderecoDTO.getUf());
+
+        return this.enderecoRepository.save(enderecoAtualizado);
+    }
+
+    public void deletarEndereco(Integer idEndereco){
+        Endereco endereco = this.getEndereco(idEndereco);
+
+        this.enderecoRepository.delete(endereco);
     }
 }

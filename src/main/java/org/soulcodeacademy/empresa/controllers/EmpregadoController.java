@@ -36,7 +36,7 @@ public class EmpregadoController {
         return atualizado;
     }
 
-    @DeleteMapping("/empregados/{idEmpregado}") // Verbo DELETE no /cargos/1
+    @DeleteMapping("/empregados/{idEmpregado}")
     public void deletarEmpregado(@PathVariable Integer idEmpregado) {
         this.empregadoService.deletarEmpregado(idEmpregado);
     }

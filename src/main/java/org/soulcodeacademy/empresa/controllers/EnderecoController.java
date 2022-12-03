@@ -29,4 +29,14 @@ public class EnderecoController {
     public Endereco salvarEndereco(@Valid @RequestBody EnderecoDTO enderecoDTO){
        return this.enderecoService.salvarEndereco(enderecoDTO);
     }
+
+    @PutMapping("/enderecos/{idEndereco}")
+    public Endereco enderecoAtualizado(@PathVariable Integer idEndereco, @Valid @RequestBody  EnderecoDTO enderecoDTO){
+        return this.enderecoService.atualizarEndereco(idEndereco, enderecoDTO);
+    }
+
+    @DeleteMapping("/enderecos/{idEndereco}")
+    public void deletarEndereco(@PathVariable Integer idEndereco){
+        this.enderecoService.deletarEndereco(idEndereco);
+    }
 }
